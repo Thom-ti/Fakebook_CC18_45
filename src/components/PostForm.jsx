@@ -9,6 +9,7 @@ const PostForm = () => {
   const user = useUserStore((state) => state.user);
   const token = useUserStore((state) => state.token);
   const createPost = usePostStore((state) => state.createPost);
+  const getAllPosts = usePostStore((state) => state.getAllPosts);
 
   const [message, setMessage] = useState("");
 
@@ -20,8 +21,9 @@ const PostForm = () => {
     try {
       let body = { message };
       let newPost = await createPost(token, body);
+      getAllPosts(token);
       setMessage("");
-      toast.success(JSON.stringify(newPost));
+      e.target.closest("dialog").close();
     } catch (err) {
       const errMsg = err.response?.data?.error || err.message;
       console.log(errMsg);

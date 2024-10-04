@@ -12,6 +12,7 @@ const usePostStore = create((set, get) => ({
         Authorization: `Bearer ${token}`,
       },
     });
+    // get().getAllPosts(token); // สั่งให้ get ข้อมูลใหม่ (posts)
     return result.data;
   },
   getAllPosts: async (token) => {

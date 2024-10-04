@@ -22,7 +22,7 @@ const PostItem = (props) => {
             />
             <div className="flex flex-col">
               <p className="font-bold">{post.user.firstName}</p>
-              <p className="text-xs font-bold opacity-50">59 min.</p>
+              <p className="text-xs font-bold opacity-50">777 min.</p>
             </div>
           </div>
           <div className="flex gap-2">
