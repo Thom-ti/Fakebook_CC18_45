@@ -10,6 +10,7 @@ import {
   TvMinimalPlay,
 } from "lucide-react";
 import Avatar from "./Avatar";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
@@ -28,18 +29,18 @@ const Header = () => {
       </div>
       {/* Center group-icons */}
       <div className="flex gap-2 flex-1 justify-center items-center">
-        <div className="flex justify-center w-20 hover:cursor-pointer hover:border-b-2 hover:border-blue-900">
-          <HomeIcon size={36} color="gray" className="w-2/5" />
-        </div>
+        <Link to="/" className="flex justify-center w-20 hover:cursor-pointer hover:border-b-2 hover:border-blue-900">
+            <HomeIcon size={36} color="gray" className="w-2/5" />
+        </Link>
         <div className="flex justify-center w-20 hover:cursor-pointer hover:border-b-2 hover:border-blue-900">
           <TvMinimalPlay size={36} color="gray" className="w-2/5" />
         </div>
         <div className="flex justify-center w-20 hover:cursor-pointer hover:border-b-2 hover:border-blue-900">
           <Store size={36} color="gray" className="w-2/5" />
         </div>
-        <div className="flex justify-center w-20 hover:cursor-pointer hover:border-b-2 hover:border-blue-900">
-          <Handshake size={36} color="gray" className="w-2/5" />
-        </div>
+        <Link to="/groups" className="flex justify-center w-20 hover:cursor-pointer hover:border-b-2 hover:border-blue-900">
+            <Handshake size={36} color="gray" className="w-2/5" />
+        </Link>
       </div>
       {/* Right menu */}
       <div className="flex gap-3 flex-1 justify-end">

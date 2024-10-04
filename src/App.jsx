@@ -1,8 +1,5 @@
 import { Outlet } from "react-router-dom";
 import Header from "./components/Header";
-// import PostContainer from "./components/PostContainer";
-// import SidebarContact from "./components/SidebarContact";
-// import SidebarMenu from "./components/SidebarMenu";
 
 const App = () => {
   return (
