@@ -6,16 +6,22 @@ import {
   X,
 } from "lucide-react";
 import Avatar from "./Avatar";
+import useUserStore from "../stores/userStore";
 
-const PostItem = () => {
+const PostItem = (props) => {
+  const { post } = props;
+  const user = useUserStore((state) => state.user);
   return (
     <div className="card bg-base-100 shadow-xl">
       <div className="card-body p-3">
         <div className="flex justify-between">
           <div className="flex gap-3">
-            <Avatar className="w-10 h-10 rounded-full" />
+            <Avatar
+              imgSrc={post.user.profileImage}
+              className="w-10 h-10 rounded-full"
+            />
             <div className="flex flex-col">
-              <p className="font-bold">Andy Codecamp</p>
+              <p className="font-bold">{post.user.firstName}</p>
               <p className="text-xs font-bold opacity-50">59 min.</p>
             </div>
           </div>
@@ -33,7 +39,7 @@ const PostItem = () => {
           </div>
         </div>
         {/* Post message */}
-        <p>This is caption</p>
+        <p>{post.message}</p>
 
         <div className="divider h-0 my-0"></div>
         <div className="flex gap-3 justify-between">

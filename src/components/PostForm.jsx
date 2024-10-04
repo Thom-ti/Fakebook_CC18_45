@@ -3,11 +3,12 @@ import Avatar from "./Avatar";
 import useUserStore from "../stores/userStore";
 import { ImagesIcon } from "lucide-react";
 import { toast } from "react-toastify";
-import axios from "axios";
+import usePostStore from "../stores/postStore";
 
 const PostForm = () => {
   const user = useUserStore((state) => state.user);
   const token = useUserStore((state) => state.token);
+  const createPost = usePostStore((state) => state.createPost);
 
   const [message, setMessage] = useState("");
 
@@ -18,12 +19,9 @@ const PostForm = () => {
   const hdlCreatePost = async (e) => {
     try {
       let body = { message };
-      const result = await axios.post("http://localhost:8899/post", body, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      toast.success(JSON.stringify(result.data));
+      let newPost = await createPost(token, body);
+      setMessage("");
+      toast.success(JSON.stringify(newPost));
     } catch (err) {
       const errMsg = err.response?.data?.error || err.message;
       console.log(errMsg);
