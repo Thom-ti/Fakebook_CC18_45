@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const [input, setInput] = useState({
@@ -41,13 +42,18 @@ const Register = () => {
         return alert("Passwords do not match");
       }
 
-      const result = await axios.post("http://localhost:8899/auth/register", input);
+      const result = await axios.post(
+        "http://localhost:8899/auth/register",
+        input
+      );
       console.log(result.data);
       setInput(initialState);
       e.target.closest("dialog").close();
+      toast.success("Register successfully");
     } catch (err) {
       const errMsg = err.response?.data?.error || err.message;
       console.log(errMsg);
+      toast.error(errMsg);
     }
   };
 

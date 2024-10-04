@@ -2,6 +2,7 @@ import { useState } from "react";
 import facebookTitle from "../assets/facebook-title.png";
 import axios from "axios";
 import Register from "./Register";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [input, setInput] = useState({
@@ -25,9 +26,11 @@ const Login = () => {
         input
       );
       console.log(result.data);
+      toast.success("Login successfully");
     } catch (err) {
       const errMsg = err.response?.data?.error || err.message;
       console.log(errMsg);
+      toast.error(errMsg);
     }
   };
 
