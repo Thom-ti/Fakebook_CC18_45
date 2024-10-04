@@ -11,8 +11,17 @@ import {
 } from "lucide-react";
 import Avatar from "./Avatar";
 import { Link } from "react-router-dom";
+import useUserStore from "../stores/userStore";
+import { useShallow } from "zustand/shallow";
 
 const Header = () => {
+  const { user, logout } = useUserStore(
+    useShallow((state) => ({ user: state.user, logout: state.logout }))
+  );
+  // const user = useUserStore((state) => state.user);
+  // const logout = useUserStore((state) => state.logout);
+  // *** อย่าทำแบบนี้ *** -> const { user, logout } = useUserStore();
+
   return (
     <header className="h-14 w-full fixed top-0 z-10 px-1 flex justify-between shadow-lg bg-white">
       {/* Logo + input */}
@@ -29,8 +38,11 @@ const Header = () => {
       </div>
       {/* Center group-icons */}
       <div className="flex gap-2 flex-1 justify-center items-center">
-        <Link to="/" className="flex justify-center w-20 hover:cursor-pointer hover:border-b-2 hover:border-blue-900">
-            <HomeIcon size={36} color="gray" className="w-2/5" />
+        <Link
+          to="/"
+          className="flex justify-center w-20 hover:cursor-pointer hover:border-b-2 hover:border-blue-900"
+        >
+          <HomeIcon size={36} color="gray" className="w-2/5" />
         </Link>
         <div className="flex justify-center w-20 hover:cursor-pointer hover:border-b-2 hover:border-blue-900">
           <TvMinimalPlay size={36} color="gray" className="w-2/5" />
@@ -38,8 +50,11 @@ const Header = () => {
         <div className="flex justify-center w-20 hover:cursor-pointer hover:border-b-2 hover:border-blue-900">
           <Store size={36} color="gray" className="w-2/5" />
         </div>
-        <Link to="/groups" className="flex justify-center w-20 hover:cursor-pointer hover:border-b-2 hover:border-blue-900">
-            <Handshake size={36} color="gray" className="w-2/5" />
+        <Link
+          to="/groups"
+          className="flex justify-center w-20 hover:cursor-pointer hover:border-b-2 hover:border-blue-900"
+        >
+          <Handshake size={36} color="gray" className="w-2/5" />
         </Link>
       </div>
       {/* Right menu */}
@@ -63,14 +78,15 @@ const Header = () => {
           <div tabIndex={0} role="button" className="">
             <Avatar
               className="w-10 h-10 rounded-full"
-              imgSrc="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+              imgSrc={user.profileImage}
+              menu={true}
             />
           </div>
           <ul
             tabIndex={0}
             className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
           >
-            <li>
+            <li onClick={logout}>
               <a>Logout</a>
             </li>
           </ul>

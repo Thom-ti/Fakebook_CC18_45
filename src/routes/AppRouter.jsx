@@ -8,6 +8,7 @@ import App from "../App";
 import SidebarMenu from "../components/SidebarMenu";
 import PostContainer from "../components/PostContainer";
 import SidebarContact from "../components/SidebarContact";
+import useUserStore from "../stores/userStore";
 
 const guestRouter = createBrowserRouter([
   { path: "/", element: <Login /> },
@@ -36,7 +37,7 @@ const userRouter = createBrowserRouter([
 ]);
 
 export default function AppRouter() {
-  const user = null; // ถ้าเป็น null คือจะไม่ส่งค่าให้ user และค้างหน้า login, ถ้าเป็น {} จะรับค่ามาใส่เป็น user
+  const user = useUserStore((state) => state.user);
   const finalRouter = user ? userRouter : guestRouter;
   return <RouterProvider router={finalRouter} />;
 }

@@ -11,7 +11,7 @@ const Avatar = (props) => {
         {/* <img src={imgSrc ? imgSrc : defaultAvatar} /> */}
       </div>
 
-      {/* {menu && <ChevronDown className="absolute -bottom-2 -right-1 w-4" />} */}
+      {menu && <ChevronDown className="absolute -bottom-3.5 -right-1 w-4" />}
     </div>
   );
 };

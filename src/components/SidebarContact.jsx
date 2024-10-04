@@ -25,7 +25,7 @@ const SidebarContact = () => {
             <img src="https://www.svgrepo.com/show/407389/scientist-medium-dark-skin-tone.svg" />
           </div>
         </div>
-        Faris Codecamp
+        Bobby Codecamp
       </button>
       <button className="btn bg-opacity-0 border-none shadow-none justify-start hover:bg-opacity-20 w-full">
         <div className="avatar items-center cursor-pointer">
@@ -33,7 +33,7 @@ const SidebarContact = () => {
             <img src="https://www.svgrepo.com/show/407389/scientist-medium-dark-skin-tone.svg" />
           </div>
         </div>
-        Best Codecamp
+        Bobby Codecamp
       </button>
     </div>
   );

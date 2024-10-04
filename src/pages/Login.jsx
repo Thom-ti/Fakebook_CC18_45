@@ -1,10 +1,12 @@
 import { useState } from "react";
 import facebookTitle from "../assets/facebook-title.png";
-import axios from "axios";
 import Register from "./Register";
 import { toast } from "react-toastify";
+import useUserStore from "../stores/userStore";
 
 const Login = () => {
+  const login = useUserStore((state) => state.login);
+  const token = useUserStore((state) => state.token);
   const [input, setInput] = useState({
     identity: "",
     password: "",
@@ -19,14 +21,9 @@ const Login = () => {
       e.preventDefault();
       // validation
       if (!(input.identity.trim() && input.password.trim())) {
-        return alert("Please fill all inputs");
+        return toast.info("Please fill all inputs");
       }
-      const result = await axios.post(
-        "http://localhost:8899/auth/login",
-        input
-      );
-      console.log(result.data);
-      toast.success("Login successfully");
+      let data = await login(input);
     } catch (err) {
       const errMsg = err.response?.data?.error || err.message;
       console.log(errMsg);
