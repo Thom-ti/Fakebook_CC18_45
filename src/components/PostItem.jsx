@@ -26,11 +26,28 @@ const PostItem = (props) => {
             </div>
           </div>
           <div className="flex gap-2">
-            <div className="avatar items-center cursor-pointer dropdown">
-              <div className="w-10 h-10 rounded-full !flex justify-center items-center hover:bg-gray-200">
-                <MoreHorizontal className="w-6" />
+            {user.id === post.userId && (
+              <div className="dropdown">
+                <div tabIndex={0} role="button" className="">
+                  <div className="avatar items-center cursor-pointer ">
+                    <div className="w-10 h-10 rounded-full !flex justify-center items-center  hover:bg-gray-200">
+                      <MoreHorizontal className="w-6" />
+                    </div>
+                  </div>
+                </div>
+                <ul
+                  tabIndex={0}
+                  className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
+                >
+                  <li>
+                    <a>Edit</a>
+                  </li>
+                  <li>
+                    <a>Delete</a>
+                  </li>
+                </ul>
               </div>
-            </div>
+            )}
             <div className="avatar items-center cursor-pointer dropdown">
               <div className="w-10 h-10 rounded-full !flex justify-center items-center hover:bg-gray-200">
                 <X className="w-6" />

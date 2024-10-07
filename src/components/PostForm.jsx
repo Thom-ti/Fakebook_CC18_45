@@ -15,6 +15,7 @@ const PostForm = () => {
   const [message, setMessage] = useState("");
   const [addPicture, setAddPicture] = useState(false);
   const [file, setFile] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const hdlChange = (e) => {
     setMessage(e.target.value);
@@ -22,6 +23,7 @@ const PostForm = () => {
 
   const hdlCreatePost = async (e) => {
     try {
+      setLoading(true);
       const body = new FormData(); // for sending files
       body.append("message", message);
 
@@ -33,19 +35,20 @@ const PostForm = () => {
       //   console.log(key, value);
       // }
 
-      const result = await createPost(token, body);
-      getAllPosts(token);
-      setMessage("");
+      const result = await createPost(token, body, user);
       e.target.closest("dialog").close();
     } catch (err) {
       const errMsg = err.response?.data?.error || err.message;
       console.log(errMsg);
       toast.error(errMsg);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="flex flex-col gap-2">
+      {loading && <span className="loading loading-dots loading-xs">loading...</span> }
       <h3 className="text-xl text-center">Create Post</h3>
       <div className="divider mt-1 mb-0"></div>
       <div className="flex gap-2">

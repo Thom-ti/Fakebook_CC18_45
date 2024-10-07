@@ -6,14 +6,15 @@ const usePostStore = create((set, get) => ({
   posts: [],
   currentPost: null,
   loading: false,
-  createPost: async (token, body) => {
+  createPost: async (token, body, user) => {
     const result = await axios.post("http://localhost:8899/post", body, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    // get().getAllPosts(token); // สั่งให้ get ข้อมูลใหม่ (posts)
-    return result.data;
+    set((state) => ({
+      posts: [{ ...result.data, user }, ...state.posts],
+    }));
   },
   getAllPosts: async (token) => {
     set({ loading: true });
