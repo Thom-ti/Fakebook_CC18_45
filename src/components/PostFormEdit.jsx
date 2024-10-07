@@ -6,12 +6,13 @@ import { toast } from "react-toastify";
 import usePostStore from "../stores/postStore";
 import AddPicture from "./AddPicture";
 
-const PostForm = () => {
+const PostFormEdit = () => {
   const user = useUserStore((state) => state.user);
   const token = useUserStore((state) => state.token);
   const createPost = usePostStore((state) => state.createPost);
+  const currentPost = usePostStore((state) => state.currentPost);
 
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState(currentPost.message);
   const [addPicture, setAddPicture] = useState(false);
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -20,7 +21,9 @@ const PostForm = () => {
     setMessage(e.target.value);
   };
 
-  const hdlCreatePost = async (e) => {
+  const hdlUpdatePost = async (e) => {
+    console.log();
+    
     try {
       setLoading(true);
       const body = new FormData(); // for sending files
@@ -29,20 +32,8 @@ const PostForm = () => {
       if (file) {
         body.append("image", file);
       }
-
-      // for multiple files : use for..of to body.append
-      // ---
-      // ex. state : files
-      // let files
-      // for(let el of files) {
-      // body.append("image", el);
-      // }
-      // ---
-      // for (let [key, value] of body.entries()) {
-      //   console.log(key, value);
-      // }
       
-      const result = await createPost(token, body, user);
+      // const result = await createPost(token, body, user);
       e.target.closest("dialog").close();
     } catch (err) {
       const errMsg = err.response?.data?.error || err.message;
@@ -56,7 +47,7 @@ const PostForm = () => {
   return (
     <div className="flex flex-col gap-2">
       {loading && <span className="loading loading-dots loading-xs">loading...</span> }
-      <h3 className="text-xl text-center">Create Post</h3>
+      <h3 className="text-xl text-center">Update Post</h3>
       <div className="divider mt-1 mb-0"></div>
       <div className="flex gap-2">
         <Avatar className="w-10 h-10 rounded-full" imgSrc={user.profileImage} />
@@ -104,12 +95,12 @@ const PostForm = () => {
         className={`btn btn-sm ${
           message.trim() ? "btn-primary" : "btn-disabled"
         }`}
-        onClick={hdlCreatePost}
+        onClick={hdlUpdatePost}
       >
-        Create Post
+        Update Post
       </button>
     </div>
   );
 };
 
-export default PostForm;
+export default PostFormEdit;

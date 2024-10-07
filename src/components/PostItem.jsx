@@ -5,12 +5,37 @@ import {
   ThumbsUp,
   X,
 } from "lucide-react";
+import { toast } from "react-toastify";
 import Avatar from "./Avatar";
 import useUserStore from "../stores/userStore";
+import usePostStore from "../stores/postStore";
 
 const PostItem = (props) => {
   const { post } = props;
   const user = useUserStore((state) => state.user);
+  const token = useUserStore((state) => state.token);
+  const deletePost = usePostStore((state) => state.deletePost);
+  const setCurrentPost = usePostStore((state) => state.setCurrentPost);
+
+  const hdlDelete = async (e) => {
+    try {
+      if (!confirm("Are you sure you want to delete this post?")) {
+        return console.log("Cancel delete");
+      }
+
+      await deletePost(token, post.id);
+    } catch (error) {
+      const errMsg = error.response?.data?.error || error.message;
+      toast.error(errMsg);
+      console.log(errMsg);
+    }
+  };
+
+  const hdlShowEditModal = (e) => {
+    setCurrentPost(post);
+    document.getElementById("editform-modal").showModal()
+  };
+
   return (
     <div className="card bg-base-100 shadow-xl">
       <div className="card-body p-3">
@@ -39,10 +64,10 @@ const PostItem = (props) => {
                   tabIndex={0}
                   className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
                 >
-                  <li>
+                  <li onClick={hdlShowEditModal}>
                     <a>Edit</a>
                   </li>
-                  <li>
+                  <li onClick={hdlDelete}>
                     <a>Delete</a>
                   </li>
                 </ul>

@@ -50,7 +50,6 @@ const CreatePost = () => {
             ✕
           </button>
           {isOpen && <PostForm />}
-
         </div>
       </dialog>
     </>
