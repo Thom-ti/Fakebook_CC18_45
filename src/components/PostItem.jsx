@@ -40,6 +40,13 @@ const PostItem = (props) => {
         </div>
         {/* Post message */}
         <p>{post.message}</p>
+        {post.image && (
+          <img
+            src={post.image}
+            alt="post-pic"
+            className="w-full h-full object-cover rounded-lg"
+          />
+        )}
 
         <div className="divider h-0 my-0"></div>
         <div className="flex gap-3 justify-between">

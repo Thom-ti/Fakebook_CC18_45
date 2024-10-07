@@ -4,6 +4,7 @@ import useUserStore from "../stores/userStore";
 import { ImagesIcon } from "lucide-react";
 import { toast } from "react-toastify";
 import usePostStore from "../stores/postStore";
+import AddPicture from "./AddPicture";
 
 const PostForm = () => {
   const user = useUserStore((state) => state.user);
@@ -12,6 +13,8 @@ const PostForm = () => {
   const getAllPosts = usePostStore((state) => state.getAllPosts);
 
   const [message, setMessage] = useState("");
+  const [addPicture, setAddPicture] = useState(false);
+  const [file, setFile] = useState(null);
 
   const hdlChange = (e) => {
     setMessage(e.target.value);
@@ -19,8 +22,18 @@ const PostForm = () => {
 
   const hdlCreatePost = async (e) => {
     try {
-      let body = { message };
-      let newPost = await createPost(token, body);
+      const body = new FormData(); // for sending files
+      body.append("message", message);
+
+      if (file) {
+        body.append("image", file);
+      }
+
+      // for (let [key, value] of body.entries()) {
+      //   console.log(key, value);
+      // }
+
+      const result = await createPost(token, body);
       getAllPosts(token);
       setMessage("");
       e.target.closest("dialog").close();
@@ -57,17 +70,32 @@ const PostForm = () => {
         placeholder={`What do you think? ${user.firstName}`}
         value={message}
         onChange={hdlChange}
+        rows={message.split("\n").length}
       ></textarea>
-      {/* Add picture area */}
+      {addPicture && (
+        <AddPicture
+          closeMe={() => setAddPicture(false)}
+          file={file}
+          setFile={setFile}
+        />
+      )}
       <div className="flex border rounded-lg p-2 justify-center items-center">
         <p>Add with your post</p>
         <div className="flex gap-2">
-          <div className="h-10 w-10 rounded-full bg-slate-100 hover:bg-slate-200 flex justify-center items-center active:scale-110 ">
+          <div
+            onClick={() => setAddPicture((prv) => !prv)}
+            className="h-10 w-10 rounded-full bg-slate-100 hover:bg-slate-200 flex justify-center items-center active:scale-110 "
+          >
             <ImagesIcon className="w-6" color="green" />
           </div>
         </div>
       </div>
-      <button className="btn btn-sm" onClick={hdlCreatePost}>
+      <button
+        className={`btn btn-sm ${
+          message.trim() ? "btn-primary" : "btn-disabled"
+        }`}
+        onClick={hdlCreatePost}
+      >
         Create Post
       </button>
     </div>

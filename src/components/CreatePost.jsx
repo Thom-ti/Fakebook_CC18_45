@@ -2,9 +2,11 @@ import { ImagesIcon, RadioIcon } from "lucide-react";
 import Avatar from "./Avatar";
 import useUserStore from "../stores/userStore";
 import PostForm from "./PostForm";
+import { useState } from "react";
 
 const CreatePost = () => {
   const user = useUserStore((state) => state.user);
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <>
       <div className="card bg-base-100 shadow-xl">
@@ -16,8 +18,10 @@ const CreatePost = () => {
             />
             <button
               className="btn flex-1 rounded-full justify-start"
-              onClick={() =>
+              onClick={() => {
+                setIsOpen(true);
                 document.getElementById("postform-modal").showModal()
+              }
               }
             >
               What do you think?
@@ -36,7 +40,7 @@ const CreatePost = () => {
           </div>
         </div>
       </div>
-      <dialog id="postform-modal" className="modal">
+      <dialog id="postform-modal" className="modal" onClose={() => setIsOpen(false)}>
         <div className="modal-box">
           <button
             type="button"
@@ -45,7 +49,8 @@ const CreatePost = () => {
           >
             ✕
           </button>
-          <PostForm />
+          {isOpen && <PostForm />}
+
         </div>
       </dialog>
     </>
