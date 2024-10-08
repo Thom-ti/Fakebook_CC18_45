@@ -1,5 +1,5 @@
 import {
-  ImagesIcon,
+  ForwardIcon,
   MessageCircle,
   MoreHorizontal,
   ThumbsUp,
@@ -113,12 +113,12 @@ const PostItem = (props) => {
             Comment
           </div>
           <div className="flex gap-3 justify-center cursor-pointer hover:bg-gray-300 rounded-lg flex-1 py-2">
-            <ImagesIcon className="h-6 w-6" />
+            <ForwardIcon className="h-6 w-6" />
             Share
           </div>
         </div>
         <div className="divider h-0 my-0"></div>
-        <CommentContainer />
+        <CommentContainer postId={post.id} />
       </div>
     </div>
   );
