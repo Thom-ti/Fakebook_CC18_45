@@ -24,7 +24,7 @@ const PostFormEdit = () => {
 
   const hdlUpdatePost = async (e) => {
     console.log();
-    
+
     try {
       setLoading(true);
       const body = new FormData(); // for sending files
@@ -33,7 +33,7 @@ const PostFormEdit = () => {
       if (file) {
         body.append("image", file);
       }
-      
+
       await updatePost(token, body, currentPost.id);
       getAllPosts(token);
       e.target.closest("dialog").close();
@@ -48,7 +48,9 @@ const PostFormEdit = () => {
 
   return (
     <div className="flex flex-col gap-2">
-      {loading && <span className="loading loading-dots loading-xs">loading...</span> }
+      {loading && (
+        <span className="loading loading-dots loading-xs">loading...</span>
+      )}
       <h3 className="text-xl text-center">Update Post</h3>
       <div className="divider mt-1 mb-0"></div>
       <div className="flex gap-2">
@@ -75,10 +77,16 @@ const PostFormEdit = () => {
         onChange={hdlChange}
         rows={message.split("\n").length}
       ></textarea>
+      {currentPost.image && (
+        <div className="border flex justify-evenly items-center">
+          <img src={currentPost.image} className="h-[100px] object-contain" />
+          <button className="btn btn-sm">Remove</button>
+        </div>
+      )}
       {addPicture && (
         <AddPicture
           closeMe={() => setAddPicture(false)}
-          file={file}
+          file={file}f
           setFile={setFile}
         />
       )}

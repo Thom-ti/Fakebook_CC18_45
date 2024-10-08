@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import Avatar from "./Avatar";
 import useUserStore from "../stores/userStore";
 import usePostStore from "../stores/postStore";
+import CommentContainer from "./CommentContainer";
 
 const PostItem = (props) => {
   const { post } = props;
@@ -33,7 +34,7 @@ const PostItem = (props) => {
 
   const hdlShowEditModal = (e) => {
     setCurrentPost(post);
-    document.getElementById("editform-modal").showModal()
+    document.getElementById("editform-modal").showModal();
   };
 
   return (
@@ -86,9 +87,20 @@ const PostItem = (props) => {
           <img
             src={post.image}
             alt="post-pic"
-            className="w-full h-full object-cover rounded-lg"
+            className="w-full h-full object-contain"
           />
         )}
+        <div className="flex justify-between items-center pe-4">
+          <div className="avatar tems-end cursor-pointer gap-1">
+            <div className="w-7 h-7 rounded-full !flex justify-center items-center bg-blue-500 text-white">
+              <ThumbsUp className="w-4 h-4" />
+            </div>
+            <p>99 likes</p>
+          </div>
+          <div className="flex gap-2">
+            <p className="opacity-60">9 comments</p>
+          </div>
+        </div>
 
         <div className="divider h-0 my-0"></div>
         <div className="flex gap-3 justify-between">
@@ -106,6 +118,7 @@ const PostItem = (props) => {
           </div>
         </div>
         <div className="divider h-0 my-0"></div>
+        <CommentContainer />
       </div>
     </div>
   );
