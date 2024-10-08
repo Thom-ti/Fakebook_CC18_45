@@ -52,6 +52,20 @@ const usePostStore = create((set, get) => ({
       },
     });
   },
+  likePost: async (token, body) => {
+    const result = await axios.post(`http://localhost:8899/like`, body, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  },
+  unlikePost: async (token, id) => {
+    const result = await axios.delete(`http://localhost:8899/like/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  },
 }));
 
 export default usePostStore;

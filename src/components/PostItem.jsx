@@ -16,7 +16,21 @@ const PostItem = (props) => {
   const user = useUserStore((state) => state.user);
   const token = useUserStore((state) => state.token);
   const deletePost = usePostStore((state) => state.deletePost);
+  const getAllPosts = usePostStore((state) => state.getAllPosts);
   const setCurrentPost = usePostStore((state) => state.setCurrentPost);
+  const likePost = usePostStore((state) => state.likePost);
+  const unlikePost = usePostStore((state) => state.unlikePost);
+
+  const haveLike = post.likes.findIndex((el) => el.userId === user.id) !== -1;
+
+  const hdlLikeClick = async (e) => {
+    if(haveLike) {
+      await unlikePost(token, post.id);
+    } else {
+      await likePost(token, {postId : post.id});
+    }
+    getAllPosts(token);
+  }
 
   const hdlDelete = async (e) => {
     try {
@@ -95,26 +109,31 @@ const PostItem = (props) => {
             <div className="w-7 h-7 rounded-full !flex justify-center items-center bg-blue-500 text-white">
               <ThumbsUp className="w-4 h-4" />
             </div>
-            <p>99 likes</p>
+            <p>ถูกใจ {post.likes.length} คน</p>
           </div>
           <div className="flex gap-2">
-            <p className="opacity-60"> {post.comments.length} comments</p>
+            <p className="opacity-60">{post.comments.length} ความคิดเห็น</p>
           </div>
         </div>
 
         <div className="divider h-0 my-0"></div>
         <div className="flex gap-3 justify-between">
-          <div className="flex gap-3 justify-center cursor-pointer hover:bg-gray-300 rounded-lg flex-1 py-2">
+          <div
+            className={`flex gap-3 justify-center cursor-pointer hover:bg-gray-300 rounded-lg flex-1 py-2 ${
+              haveLike ? "bg-blue-300 text-white" : ""
+            }`}
+            onClick={hdlLikeClick}
+          >
             <ThumbsUp className="h-6 w-6" />
-            Like
+            ถูกใจ
           </div>
           <div className="flex gap-3 justify-center cursor-pointer hover:bg-gray-300 rounded-lg flex-1 py-2">
             <MessageCircle className="h-6 w-6" />
-            Comment
+            ความคิดเห็น
           </div>
           <div className="flex gap-3 justify-center cursor-pointer hover:bg-gray-300 rounded-lg flex-1 py-2">
             <ForwardIcon className="h-6 w-6" />
-            Share
+            แชร์
           </div>
         </div>
         <div className="divider h-0 my-0"></div>
