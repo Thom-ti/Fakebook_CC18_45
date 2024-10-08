@@ -98,7 +98,7 @@ const PostItem = (props) => {
             <p>99 likes</p>
           </div>
           <div className="flex gap-2">
-            <p className="opacity-60">9 comments</p>
+            <p className="opacity-60"> {post.comments.length} comments</p>
           </div>
         </div>
 
@@ -118,7 +118,7 @@ const PostItem = (props) => {
           </div>
         </div>
         <div className="divider h-0 my-0"></div>
-        <CommentContainer postId={post.id} />
+        <CommentContainer postId={post.id} comments={post.comments} />
       </div>
     </div>
   );

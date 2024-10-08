@@ -44,9 +44,13 @@ const usePostStore = create((set, get) => ({
         Authorization: `Bearer ${token}`,
       },
     });
-    // set((state) => ({
-    //   posts: state.posts.map((el) => (el.id === id ? result.data : el)),
-    // }));
+  },
+  commentPost: async (token, body) => {
+    const result = await axios.post("http://localhost:8899/comment", body, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   },
 }));
 
