@@ -38,6 +38,16 @@ const usePostStore = create((set, get) => ({
   setCurrentPost: (post) => {
     set({ currentPost: post });
   },
+  updatePost: async (token, body, id) => {
+    const result = await axios.put(`http://localhost:8899/post/${id}`, body, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    // set((state) => ({
+    //   posts: state.posts.map((el) => (el.id === id ? result.data : el)),
+    // }));
+  },
 }));
 
 export default usePostStore;

@@ -9,8 +9,9 @@ import AddPicture from "./AddPicture";
 const PostFormEdit = () => {
   const user = useUserStore((state) => state.user);
   const token = useUserStore((state) => state.token);
-  const createPost = usePostStore((state) => state.createPost);
+  const getAllPosts = usePostStore((state) => state.getAllPosts);
   const currentPost = usePostStore((state) => state.currentPost);
+  const updatePost = usePostStore((state) => state.updatePost);
 
   const [message, setMessage] = useState(currentPost.message);
   const [addPicture, setAddPicture] = useState(false);
@@ -33,7 +34,8 @@ const PostFormEdit = () => {
         body.append("image", file);
       }
       
-      // const result = await createPost(token, body, user);
+      await updatePost(token, body, currentPost.id);
+      getAllPosts(token);
       e.target.closest("dialog").close();
     } catch (err) {
       const errMsg = err.response?.data?.error || err.message;
